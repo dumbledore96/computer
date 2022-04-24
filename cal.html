@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>computer</title>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="cal.css">
+</head>
+<body>
+    <div class="wrap">
+        <div id="output"></div>
+        <div class="bottom" id="ac" onclick="ac()">AC</div>
+        <div class="bottom" id="equal" onclick="equal()">=</div>
+        <div class="bottom" onclick="inter(7)">7</div>
+        <div class="bottom" onclick="inter(8)">8</div>
+        <div class="bottom" onclick="inter(9)">9</div>
+        <div class="bottom" id="divid" onclick="divid()">÷</div>
+        <div class="bottom" onclick="inter(4)">4</div>
+        <div class="bottom" onclick="inter(5)">5</div>
+        <div class="bottom" onclick="inter(6)">6</div>
+        <div class="bottom" id="multiply" onclick="multiply()">x</div>
+        <div class="bottom" onclick="inter(1)">1</div>
+        <div class="bottom" onclick="inter(2)">2</div>
+        <div class="bottom" onclick="inter(3)">3</div>
+        <div class="bottom" id="subtract" onclick="subtract()">-</div>
+        <div class="bottom" id="i0" onclick="inter(0)">0</div>
+        <div class="bottom" id="plus" onclick="plus()">+</div>
+    </div>
+
+    <script>
+        var ans=0,tem;
+        var val=document.getElementById("output");
+        var cal={
+            plus:false,
+            subtract:false,
+            multiply:false,
+            divid:false
+        }
+        function inter(n){
+            if(ans>=100000000){
+                ans=ans;
+            }
+            else{
+                ans=ans*10+n;
+            }
+            val.innerHTML=ans;
+        }
+
+        function ac(){
+            ans=0;
+            tem=0;
+            cal.plus=false;
+            cal.subtract=false;
+            cal.multiply=false;
+            cal.divid=false;
+            dis();
+            val.innerHTML='';
+        }
+
+        function plus(){
+            if(val.innerHTML!='' && cal.plus!=true){
+                cal.plus=true;
+                cal.subtract=false;
+                cal.multiply=false;
+                cal.divid=false;
+                dis();
+                tem=ans;
+                ans=0;
+                val.innerHTML='';
+            }
+        }
+        function subtract(){
+            if(val.innerHTML!='' && cal.subtract!=true){
+                cal.plus=false;
+                cal.subtract=true;
+                cal.multiply=false;
+                cal.divid=false;
+                dis();
+                tem=ans;
+                ans=0;
+                val.innerHTML='';
+            }
+        }
+        function multiply(){
+            if(val.innerHTML!='' && cal.multiply!=true){
+                cal.plus=false;
+                cal.subtract=false;
+                cal.multiply=true;
+                cal.divid=false;
+                dis();
+                tem=ans;
+                ans=0;
+                val.innerHTML='';
+            }
+        }
+
+        function divid(){
+            if(val.innerHTML!='' && cal.divid!=true){
+                cal.plus=false;
+                cal.subtract=false;
+                cal.multiply=false;
+                cal.divid=true;
+                dis();
+                tem=ans;
+                ans=0;
+                val.innerHTML='';
+            }
+        }
+
+        function dis(){
+            if(cal.plus==true){
+                document.getElementById("plus").style.color='#f00';
+                document.getElementById("plus").style.fontWeight='bold';
+            }
+            else{
+                document.getElementById("plus").style.color='#000';
+                document.getElementById("plus").style.fontWeight='normal';
+            }
+
+            if(cal.subtract==true){
+                document.getElementById("subtract").style.color='#f00';
+                document.getElementById("subtract").style.fontWeight='bold';
+            }
+            else{
+                document.getElementById("subtract").style.color='#000';
+                document.getElementById("subtract").style.fontWeight='normal';
+            }
+
+            if(cal.multiply==true){
+                document.getElementById("multiply").style.color='#f00';
+                document.getElementById("multiply").style.fontWeight='bold';
+            }
+            else{
+                document.getElementById("multiply").style.color='#000';
+                document.getElementById("multiply").style.fontWeight='normal';
+            }
+
+            if(cal.divid==true){
+                document.getElementById("divid").style.color='#f00';
+                document.getElementById("divid").style.fontWeight='bold';
+            }
+            else{
+                document.getElementById("divid").style.color='#000';
+                document.getElementById("divid").style.fontWeight='normal';
+            }     
+            
+        }
+        
+        function equal(){
+            if(cal.plus==true && val.innerHTML!=''){
+                val.innerHTML=ans+tem;
+                ans=0;
+                tem=0;
+                cal.plus=false;
+            }
+            else if(cal.subtract==true && val.innerHTML!=''){
+                val.innerHTML=tem-ans;
+                ans=0;
+                tem=0;
+                cal.subtract=false;
+            }
+            else if(cal.multiply==true && val.innerHTML!=''){
+                val.innerHTML=ans*tem;
+                ans=0;
+                tem=0;
+                cal.multiply=false;
+            }
+            else if(cal.divid==true && val.innerHTML!=''){
+                val.innerHTML=tem/ans;
+                ans=0;
+                tem=0;
+                cal.divid=false;
+            }
+            dis();
+        }
+    </script>
+</body>
+</html>
